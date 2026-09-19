@@ -675,11 +675,6 @@ html:not(.js) .hero-titulo .w > span { transform: none; }
   transition: width .3s var(--ease), background-color .3s;
 }
 .carrossel-pontos button[aria-current="true"]::after { width: 24px; background: var(--azul); }
-/* Dúvidas em carrossel: pergunta e resposta sempre à mostra */
-.faq.carrossel-ativo { align-items: stretch; }
-.faq.carrossel-ativo .faq-item { box-shadow: none; }
-.faq.carrossel-ativo .faq-item summary { pointer-events: none; padding-bottom: 10px; font-weight: 600; }
-.faq.carrossel-ativo .faq-item summary::after { display: none; }
 .painel-azul .carrossel-pontos button::after { background: rgba(255, 255, 255, .4); }
 .painel-azul .carrossel-pontos button[aria-current="true"]::after { background: var(--branco); }
 
@@ -728,6 +723,9 @@ html:not(.js) .hero-titulo .w > span { transform: none; }
   .cabeca { grid-template-columns: 1fr; }
   .cabeca-lado { justify-self: start; text-align: left; }
   .passos { grid-template-columns: 1fr; }
+  /* Dúvidas não aparecem no celular (nem os links que levam até elas) */
+  #duvidas, .menu a[href$="#duvidas"], .rodape-links a[href$="#duvidas"] { display: none; }
+
   /* Por que a CenterFisco: sem esferas; número em texto com a legenda embaixo */
   .tipo-numeros { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 20px; }
   .tipo-numeros::before { display: none; }
