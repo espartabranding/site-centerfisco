@@ -577,7 +577,7 @@ html:not(.js) .hero-titulo .w > span { transform: none; }
 .painel-azul .servico-marca { color: var(--branco); }
 
 /* Por que a CenterFisco + Como funciona: layout só de tipografia */
-.tipo { padding: clamp(24px, 3.5vw, 52px); border-radius: var(--r-xl); background: var(--branco); }
+.tipo { --tipo-pad: clamp(24px, 3.5vw, 52px); padding: var(--tipo-pad); border-radius: var(--r-xl); background: var(--branco); }
 .tipo-topo .chave { display: block; margin-bottom: 12px; }
 .tipo-titulo { max-width: 22em; font-size: clamp(1.9rem, 3vw, 2.9rem); line-height: 1.05; }
 .tipo-numeros { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: clamp(28px, 3.5vw, 44px); }
@@ -727,6 +727,7 @@ html:not(.js) .hero-titulo .w > span { transform: none; }
   #duvidas, .menu a[href$="#duvidas"], .rodape-links a[href$="#duvidas"] { display: none; }
   /* rodapé sem a lista de serviços; a navegação ocupa a largura em duas colunas */
   .rodape-dir > div.rodape-links { display: none; }
+  .rodape-empresa > span { display: none; } /* razão social e CNPJ */
   .rodape-dir { display: block; width: 100%; }
   .rodape-dir nav { grid-template-columns: 1fr 1fr; column-gap: 24px; }
   .rodape-dir nav p { grid-column: 1 / -1; }
@@ -741,6 +742,11 @@ html:not(.js) .hero-titulo .w > span { transform: none; }
     color: var(--azul); font-size: 2.6rem; font-weight: 200; letter-spacing: -.05em;
   }
   .tipo-numeros sup { top: -.3em; color: var(--azul); }
+  /* "Na prática": faixa azul de ponta a ponta da tela, fechando o bloco */
+  .tipo-rodape {
+    margin: 28px calc(-1 * (var(--tipo-pad) + var(--gutter))) calc(-1 * var(--tipo-pad));
+    padding: 32px calc(var(--tipo-pad) + var(--gutter)); border-radius: 0;
+  }
   .tipo-numeros span { margin-top: 6px; max-width: none; font-size: .9375rem; }
     .faq-bloco { grid-template-columns: 1fr; }
   .noticias { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -795,6 +801,7 @@ html:not(.js) .hero-titulo .w > span { transform: none; }
   .hero-saude .hero-esq { padding-top: 250px; }
   .para-quem-foto img { aspect-ratio: 16 / 10; }
   .hero-saude .marca-saude { height: 40px; margin-bottom: 20px; }
+  .hero-titulo-saude { font-size: 1.8rem; }
 
   /* Topo da home: o rosto do cliente no centro da tela */
   .hero:not(.hero-saude) .fatia { object-position: 40% center; }
@@ -844,7 +851,7 @@ html:not(.js) .hero-titulo .w > span { transform: none; }
 @media (max-width: 420px) {
   .btn { font-size: .8125rem; }
   .reforma-rodape, .tipo-rodape, .noticias-cta { padding-inline: 18px; }
-  .tipo { padding-inline: 18px; }
+  .tipo { --tipo-pad: 18px; }
 }
 
 @media (max-width: 359px) {
