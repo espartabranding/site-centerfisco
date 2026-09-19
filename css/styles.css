@@ -491,7 +491,7 @@ html:not(.js) .hero-titulo .w > span { transform: none; }
 .rodape-esq { display: flex; align-items: center; gap: clamp(28px, 3vw, 48px); }
 .rodape-dir { display: flex; align-items: flex-start; gap: clamp(40px, 5vw, 80px); }
 .rodape-meio img { width: clamp(180px, 16vw, 240px); height: auto; }
-.rodape-empresa { font-style: normal; }
+.rodape-empresa { font-style: normal; font-weight: 600; color: var(--branco); }
 .rodape-empresa a { text-decoration: none; }
 .rodape-empresa a:hover { color: var(--ceu); }
 .rodape-links { display: grid; gap: 8px; align-content: start; font-size: .875rem; }
