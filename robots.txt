@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://espartabranding.github.io/site-centerfisco/sitemap.xml
