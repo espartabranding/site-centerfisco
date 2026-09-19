@@ -750,6 +750,9 @@ html:not(.js) .hero-titulo .w > span { transform: none; }
   .tipo-numeros.trilha-rotativa strong { font-size: 3.6rem; line-height: 1; }
   .tipo-numeros.trilha-rotativa span { margin-top: 10px; font-size: 1.0625rem; }
 
+  /* Blocos de fundo azul vão de ponta a ponta da tela */
+  .painel-azul, .reforma-rodape, .noticias-cta, .saude-banner { margin-inline: calc(-1 * var(--gutter)); border-radius: 0; }
+
   /* Dúvidas não aparecem no celular (nem os links que levam até elas) */
   #duvidas, .menu a[href$="#duvidas"], .rodape-links a[href$="#duvidas"] { display: none; }
   /* rodapé sem a lista de serviços; a navegação ocupa a largura em duas colunas */
