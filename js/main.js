@@ -1,7 +1,7 @@
 // Canais de contato. Preencha para ativar os links e o envio do formulário.
 // whatsapp: só números, com DDI e DDD (ex.: '5511999999999').
 const CONTATO = {
-  whatsapp: '555193649044',
+  whatsapp: '5551993649044',
   email: '',
   endereco: '',
 };
