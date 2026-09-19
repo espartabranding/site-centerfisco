@@ -175,12 +175,15 @@ document.querySelectorAll('[data-carrossel]').forEach((trilho) => {
   celular.addEventListener('change', confere);
 });
 
-/* Linha do tempo e números do "Por que a CenterFisco" no celular: um item por vez,
-   no mesmo lugar, trocando sozinho. Os anos (ou números) viram um seletor com barra de progresso. */
+/* Celular: um item por vez, no mesmo lugar, trocando sozinho.
+   Linha do tempo: os anos (ou etapas) viram um seletor com barra de progresso.
+   Números do "Por que a CenterFisco": só alternam dentro do bloco, sem seletor. */
 const telaEstreita = window.matchMedia('(max-width: 900px)');
-document.querySelectorAll('.trilha, .tipo-numeros').forEach((trilha) => {
-  const itens = [...trilha.children];
+document.querySelectorAll('.trilha, .tipo-numeros').forEach((lista) => {
+  const itens = [...lista.children];
+  const comSeletor = lista.matches('.trilha');
   const TEMPO = 5000;
+  let ligado = false;
   let seletor = null;
   let atual = 0;
   let timer = 0;
@@ -192,52 +195,61 @@ document.querySelectorAll('.trilha, .tipo-numeros').forEach((trilha) => {
       li.classList.toggle('ativo', k === atual);
       li.setAttribute('aria-hidden', String(k !== atual));
     });
-    [...seletor.children].forEach((b, k) => {
+    seletor?.querySelectorAll('button').forEach((b, k) => {
       b.setAttribute('aria-pressed', String(k === atual));
       b.classList.remove('corre');
     });
     clearTimeout(timer);
     if (visivel && !reduzMovimento) {
-      const botao = seletor.children[atual];
-      void botao.offsetWidth; // reinicia a animação da barra
-      botao.classList.add('corre');
+      const botao = seletor?.children[atual];
+      if (botao) {
+        void botao.offsetWidth; // reinicia a animação da barra
+        botao.classList.add('corre');
+      }
       timer = setTimeout(() => mostra(atual + 1), TEMPO);
     }
   };
 
   const obs = 'IntersectionObserver' in window ? new IntersectionObserver(([e]) => {
     visivel = e.isIntersecting;
-    if (seletor) mostra(atual);
+    if (ligado) mostra(atual);
   }, { threshold: 0.3 }) : null;
 
   const liga = () => {
-    seletor = document.createElement('div');
-    seletor.className = 'trilha-seletor';
-    seletor.setAttribute('role', 'group');
-    seletor.setAttribute('aria-label', 'Escolha a etapa');
-    itens.forEach((li, k) => {
-      const b = document.createElement('button');
-      b.type = 'button';
-      b.textContent = li.querySelector('strong').textContent;
-      b.addEventListener('click', () => mostra(k));
-      seletor.append(b);
-    });
-    trilha.before(seletor);
-    trilha.classList.add('trilha-rotativa');
-    obs ? obs.observe(trilha) : (visivel = true);
+    ligado = true;
+    if (comSeletor) {
+      seletor = document.createElement('div');
+      seletor.className = 'trilha-seletor';
+      seletor.setAttribute('role', 'group');
+      seletor.setAttribute('aria-label', 'Escolha a etapa');
+      itens.forEach((li, k) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = li.querySelector('strong').textContent;
+        b.addEventListener('click', () => mostra(k));
+        seletor.append(b);
+      });
+      lista.before(seletor);
+    }
+    lista.classList.add('trilha-rotativa');
+    obs ? obs.observe(lista) : (visivel = true);
     mostra(0);
   };
 
   const desliga = () => {
+    ligado = false;
     clearTimeout(timer);
-    obs?.unobserve(trilha);
-    seletor.remove();
+    obs?.unobserve(lista);
+    seletor?.remove();
     seletor = null;
-    trilha.classList.remove('trilha-rotativa');
+    lista.classList.remove('trilha-rotativa');
     itens.forEach((li) => { li.classList.remove('ativo'); li.removeAttribute('aria-hidden'); });
   };
 
-  const confere = () => (telaEstreita.matches ? !seletor && liga() : seletor && desliga());
+  const confere = () => {
+    if (telaEstreita.matches && !ligado) liga();
+    else if (!telaEstreita.matches && ligado) desliga();
+  };
   confere();
   telaEstreita.addEventListener('change', confere);
 });
