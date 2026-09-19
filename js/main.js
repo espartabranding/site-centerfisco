@@ -175,6 +175,73 @@ document.querySelectorAll('[data-carrossel]').forEach((trilho) => {
   celular.addEventListener('change', confere);
 });
 
+/* Linha do tempo no celular: uma etapa por vez, no mesmo lugar, trocando sozinha.
+   Os anos (ou etapas) viram um seletor com barra de progresso. */
+const telaEstreita = window.matchMedia('(max-width: 900px)');
+document.querySelectorAll('.trilha').forEach((trilha) => {
+  const itens = [...trilha.children];
+  const TEMPO = 5000;
+  let seletor = null;
+  let atual = 0;
+  let timer = 0;
+  let visivel = false;
+
+  const mostra = (i) => {
+    atual = (i + itens.length) % itens.length;
+    itens.forEach((li, k) => {
+      li.classList.toggle('ativo', k === atual);
+      li.setAttribute('aria-hidden', String(k !== atual));
+    });
+    [...seletor.children].forEach((b, k) => {
+      b.setAttribute('aria-pressed', String(k === atual));
+      b.classList.remove('corre');
+    });
+    clearTimeout(timer);
+    if (visivel && !reduzMovimento) {
+      const botao = seletor.children[atual];
+      void botao.offsetWidth; // reinicia a animação da barra
+      botao.classList.add('corre');
+      timer = setTimeout(() => mostra(atual + 1), TEMPO);
+    }
+  };
+
+  const obs = 'IntersectionObserver' in window ? new IntersectionObserver(([e]) => {
+    visivel = e.isIntersecting;
+    if (seletor) mostra(atual);
+  }, { threshold: 0.3 }) : null;
+
+  const liga = () => {
+    seletor = document.createElement('div');
+    seletor.className = 'trilha-seletor';
+    seletor.setAttribute('role', 'group');
+    seletor.setAttribute('aria-label', 'Escolha a etapa');
+    itens.forEach((li, k) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = li.querySelector('strong').textContent;
+      b.addEventListener('click', () => mostra(k));
+      seletor.append(b);
+    });
+    trilha.before(seletor);
+    trilha.classList.add('trilha-rotativa');
+    obs ? obs.observe(trilha) : (visivel = true);
+    mostra(0);
+  };
+
+  const desliga = () => {
+    clearTimeout(timer);
+    obs?.unobserve(trilha);
+    seletor.remove();
+    seletor = null;
+    trilha.classList.remove('trilha-rotativa');
+    itens.forEach((li) => { li.classList.remove('ativo'); li.removeAttribute('aria-hidden'); });
+  };
+
+  const confere = () => (telaEstreita.matches ? !seletor && liga() : seletor && desliga());
+  confere();
+  telaEstreita.addEventListener('change', confere);
+});
+
 /* Canais de contato */
 const linkWhats = document.querySelector('[data-contact="whatsapp"]');
 const linkEmail = document.querySelector('[data-contact="email"]');
