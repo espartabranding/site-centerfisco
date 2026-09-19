@@ -725,6 +725,11 @@ html:not(.js) .hero-titulo .w > span { transform: none; }
   .passos { grid-template-columns: 1fr; }
   /* Dúvidas não aparecem no celular (nem os links que levam até elas) */
   #duvidas, .menu a[href$="#duvidas"], .rodape-links a[href$="#duvidas"] { display: none; }
+  /* rodapé sem a lista de serviços; a navegação ocupa a largura em duas colunas */
+  .rodape-dir > div.rodape-links { display: none; }
+  .rodape-dir { display: block; width: 100%; }
+  .rodape-dir nav { grid-template-columns: 1fr 1fr; column-gap: 24px; }
+  .rodape-dir nav p { grid-column: 1 / -1; }
 
   /* Por que a CenterFisco: sem esferas; número em texto com a legenda embaixo */
   .tipo-numeros { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 20px; }
@@ -825,7 +830,6 @@ html:not(.js) .hero-titulo .w > span { transform: none; }
   .contato-painel { display: none; }
 
   /* Rodapé: listas lado a lado */
-  .rodape-dir { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; }
   .rodape-meio { gap: 32px; }
   .rodape-gigante { margin-top: 32px; }
 
