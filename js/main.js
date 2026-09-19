@@ -175,10 +175,10 @@ document.querySelectorAll('[data-carrossel]').forEach((trilho) => {
   celular.addEventListener('change', confere);
 });
 
-/* Linha do tempo no celular: uma etapa por vez, no mesmo lugar, trocando sozinha.
-   Os anos (ou etapas) viram um seletor com barra de progresso. */
+/* Linha do tempo e números do "Por que a CenterFisco" no celular: um item por vez,
+   no mesmo lugar, trocando sozinho. Os anos (ou números) viram um seletor com barra de progresso. */
 const telaEstreita = window.matchMedia('(max-width: 900px)');
-document.querySelectorAll('.trilha').forEach((trilha) => {
+document.querySelectorAll('.trilha, .tipo-numeros').forEach((trilha) => {
   const itens = [...trilha.children];
   const TEMPO = 5000;
   let seletor = null;
