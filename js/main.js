@@ -131,6 +131,8 @@ document.querySelectorAll('[data-carrossel]').forEach((trilho) => {
   };
 
   const liga = () => {
+    // no carrossel de dúvidas cada cartão já mostra a resposta
+    originais.forEach((el) => { if (el.matches('details')) el.open = true; });
     const copia = (el) => {
       const c = el.cloneNode(true);
       c.setAttribute('aria-hidden', 'true');
@@ -163,6 +165,7 @@ document.querySelectorAll('[data-carrossel]').forEach((trilho) => {
     trilho.removeEventListener('scroll', aoRolar);
     todos().forEach((el) => { if (!originais.includes(el)) el.remove(); });
     trilho.classList.remove('carrossel-ativo');
+    originais.forEach((el) => { if (el.matches('details')) el.open = false; });
     pontos?.remove();
     pontos = null;
   };

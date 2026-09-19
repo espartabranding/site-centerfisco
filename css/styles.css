@@ -675,6 +675,11 @@ html:not(.js) .hero-titulo .w > span { transform: none; }
   transition: width .3s var(--ease), background-color .3s;
 }
 .carrossel-pontos button[aria-current="true"]::after { width: 24px; background: var(--azul); }
+/* Dúvidas em carrossel: pergunta e resposta sempre à mostra */
+.faq.carrossel-ativo { align-items: stretch; }
+.faq.carrossel-ativo .faq-item { box-shadow: none; }
+.faq.carrossel-ativo .faq-item summary { pointer-events: none; padding-bottom: 10px; font-weight: 600; }
+.faq.carrossel-ativo .faq-item summary::after { display: none; }
 .painel-azul .carrossel-pontos button::after { background: rgba(255, 255, 255, .4); }
 .painel-azul .carrossel-pontos button[aria-current="true"]::after { background: var(--branco); }
 
@@ -778,6 +783,20 @@ html:not(.js) .hero-titulo .w > span { transform: none; }
   .hero-saude .hero-esq { padding-top: 250px; }
   .para-quem-foto img { aspect-ratio: 16 / 10; }
   .hero-saude .marca-saude { height: 40px; margin-bottom: 20px; }
+
+  /* Topo da home: o rosto do cliente no centro da tela */
+  .hero:not(.hero-saude) .fatia { object-position: 40% center; }
+
+  /* Por que a CenterFisco: sem esferas, números em lista com o texto ao lado */
+  .tipo-numeros { grid-template-columns: 1fr; row-gap: 0; margin-top: 24px; border-top: 1px solid var(--linha); }
+  .tipo-numeros li { flex-direction: row; align-items: center; gap: 16px; padding: 14px 0; text-align: left; border-bottom: 1px solid var(--linha); }
+  .tipo-numeros strong {
+    flex: none; justify-content: flex-start; width: 5.6rem; aspect-ratio: auto;
+    background: none; box-shadow: none; border-radius: 0;
+    color: var(--azul); font-size: 2.2rem; font-weight: 200;
+  }
+  .tipo-numeros sup { color: var(--azul); }
+  .tipo-numeros span { margin-top: 0; max-width: none; font-size: .9375rem; }
 
   /* Linha do tempo: trilho vertical à esquerda */
   .trilha { gap: 28px; margin-top: 32px; padding: 0 0 0 30px; }
